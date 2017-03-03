@@ -15,7 +15,7 @@ namespace AggregateEvents.Model
         public string Name { get; private set; }
         public bool IsComplete { get; private set; }
         public int HoursRemaining { get; private set; }
-
+        
         public void MarkComplete()
         {
             if (IsComplete) return;
