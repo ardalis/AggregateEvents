@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AggregateEvents
 {
-    public static class DomainEvents
+    public static class AggregateEvents
     {
         [ThreadStatic] //so that each thread has its own callbacks
         private static List<Delegate> _actions;

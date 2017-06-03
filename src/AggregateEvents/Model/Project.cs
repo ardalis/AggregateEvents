@@ -27,8 +27,8 @@ namespace AggregateEvents.Model
 
         public Project()
         {
-            DomainEvents.Register<TaskCompletedEvent>(HandleTaskCompleted);
-            DomainEvents.Register<TaskHoursUpdatedEvent>(HandleTaskHoursUpdated);
+            AggregateEvents.Register<TaskCompletedEvent>(HandleTaskCompleted);
+            AggregateEvents.Register<TaskHoursUpdatedEvent>(HandleTaskHoursUpdated);
         }
 
         private void HandleTaskHoursUpdated(TaskHoursUpdatedEvent taskHoursUpdatedEvent)
@@ -103,7 +103,10 @@ namespace AggregateEvents.Model
             var taskToDelete = _tasks.SingleOrDefault(t => t.Id == id);
             if (taskToDelete == null) return;
             _tasks.Remove(taskToDelete);
-            DomainEvents.Raise(new TaskDeletedEvent(taskToDelete));
+
+            // why raise this event here?
+            // TODO: Replace with Domain Event?
+            AggregateEvents.Raise(new TaskDeletedEvent(taskToDelete));
             Log($"{taskToDelete.Name} deleted.");
         }
 

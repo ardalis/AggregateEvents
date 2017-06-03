@@ -25,7 +25,7 @@ namespace AggregateEvents.Model
             if (IsComplete) return;
             IsComplete = true;
             HoursRemaining = 0;
-            DomainEvents.Raise(new TaskCompletedEvent(this));
+            AggregateEvents.Raise(new TaskCompletedEvent(this));
         }
 
         public void UpdateHoursRemaining(int hours)
@@ -41,7 +41,7 @@ namespace AggregateEvents.Model
                     return;
                 }
                 IsComplete = false;
-                DomainEvents.Raise(new TaskHoursUpdatedEvent(this));
+                AggregateEvents.Raise(new TaskHoursUpdatedEvent(this));
             }
             catch (Exception)
             {
