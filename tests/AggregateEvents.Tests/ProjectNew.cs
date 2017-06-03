@@ -39,5 +39,22 @@ namespace AggregateEvents.Tests
             Assert.True(project.ToString().Contains(taskName));
             Assert.False(project2.ToString().Contains(taskName));
         }
+
+        [Fact]
+        public void HandleOwnTaskHoursUpdatedEventOnly()
+        {
+            DomainEvents.ClearCallbacks();
+            var project = new Project();
+            string taskName = Guid.NewGuid().ToString();
+            project.AddTask(taskName, 1);
+
+            // project 2 has no tasks assigned to it.
+            var project2 = new Project();
+
+            project.Tasks.First().UpdateHoursRemaining(2);
+
+            Assert.True(project.ToString().Contains(taskName));
+            Assert.False(project2.ToString().Contains(taskName));
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AggregateEvents.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Text;
 namespace AggregateEvents.Model
 {
     /// <summary>
-    /// Project had a number of tasks
+    /// Project has a number of tasks
     /// Project state depends on task state
     /// Project invariant: cannot have total hours more than _hoursLimit
     /// </summary>
