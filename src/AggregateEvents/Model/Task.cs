@@ -32,13 +32,13 @@ namespace AggregateEvents.Model
             try
             {
                 HoursRemaining = hours;
-                DomainEvents.Raise(new TaskHoursUpdatedEvent(this));
                 if (HoursRemaining == 0)
                 {
                     MarkComplete();
                     return;
                 }
                 IsComplete = false;
+                DomainEvents.Raise(new TaskHoursUpdatedEvent(this));
             }
             catch (Exception)
             {

@@ -5,6 +5,11 @@ using System.Text;
 
 namespace AggregateEvents.Model
 {
+    /// <summary>
+    /// Project had a number of tasks
+    /// Project state depends on task state
+    /// Project invariant: cannot have total hours more than _hoursLimit
+    /// </summary>
     public class Project : Entity, IAggregateRoot
     {
         public string Name { get; set; }
@@ -32,6 +37,7 @@ namespace AggregateEvents.Model
                 Log("Update would exceed project hour limit.");
                 throw new Exception("Project hour limit exceeded.");
             }
+            UpdateStatus();
         }
 
         private bool VerifyHoursWithinLimit(int newTaskHours = 0)
@@ -108,7 +114,7 @@ namespace AggregateEvents.Model
             sb.AppendLine("--------------");
             foreach (var task in _tasks)
             {
-                sb.AppendLine($"Task: {task.Name} {task.HoursRemaining} hours");
+                sb.AppendLine($"Task: {task.Name} {task.HoursRemaining} hours; Complete? {task.IsComplete}");
             }
             sb.AppendLine("Activity Log:");
             sb.AppendLine("--------------");
