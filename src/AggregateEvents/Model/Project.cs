@@ -32,6 +32,7 @@ namespace AggregateEvents.Model
 
         private void HandleTaskHoursUpdated(TaskHoursUpdatedEvent taskHoursUpdatedEvent)
         {
+            if (taskHoursUpdatedEvent.Task.ProjectId != Id) return;
             if(!VerifyHoursWithinLimit())
             {
                 Log("Update would exceed project hour limit.");
@@ -47,6 +48,7 @@ namespace AggregateEvents.Model
 
         private void HandleTaskCompleted(TaskCompletedEvent taskCompletedEvent)
         {
+            if (taskCompletedEvent.Task.ProjectId != Id) return;
             UpdateStatus();
             Log($"{taskCompletedEvent.Task.Name} completed.");
         }
@@ -79,7 +81,7 @@ namespace AggregateEvents.Model
 
         public void AddTask(string name, int hoursRemaining)
         {
-            var task = new Task(name, hoursRemaining);
+            var task = new Task(name, hoursRemaining, Id);
             if (hoursRemaining < 0)
             {
                 Log("Can't add a task with negative hours remaining.");

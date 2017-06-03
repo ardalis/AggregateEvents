@@ -4,15 +4,18 @@ namespace AggregateEvents.Model
 {
     public class Task : Entity
     {
-        internal Task(string name, int hoursRemaining)
+        public Task(string name, 
+            int hoursRemaining,
+            Guid projectId)
         {
             Name = name;
             HoursRemaining = hoursRemaining;
+            ProjectId = projectId;
         }
         private Task()
         {
         }
-        public int ProjectId { get; private set; }
+        public Guid ProjectId { get; }
         public string Name { get; private set; }
         public bool IsComplete { get; private set; }
         public int HoursRemaining { get; private set; }
