@@ -20,7 +20,7 @@ namespace AggregateEvents.Tests
         {
             var project = new Project();
 
-            Assert.Equal(0, project.Tasks.Count());
+            Assert.Empty(project.Tasks);
         }
 
         [Fact]
@@ -36,8 +36,8 @@ namespace AggregateEvents.Tests
 
             AggregateEvents.Raise(new TaskCompletedEvent(project.Tasks.First()));
 
-            Assert.True(project.ToString().Contains(taskName));
-            Assert.False(project2.ToString().Contains(taskName));
+            Assert.Contains(taskName, project.ToString());
+            Assert.DoesNotContain(taskName, project2.ToString());
         }
 
         [Fact]
@@ -53,8 +53,8 @@ namespace AggregateEvents.Tests
 
             project.Tasks.First().UpdateHoursRemaining(2);
 
-            Assert.True(project.ToString().Contains(taskName));
-            Assert.False(project2.ToString().Contains(taskName));
+            Assert.Contains(taskName, project.ToString());
+            Assert.DoesNotContain(taskName, project2.ToString());
         }
     }
 }
